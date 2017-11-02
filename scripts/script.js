@@ -4,6 +4,8 @@ var stop = false;
 window.onload = function init(){
     document.getElementById("startTimer").addEventListener("click",startTimer);
     document.getElementById("stopTimer").addEventListener("click",stopTimer);
+
+    console.log(sessionParams.continuousMode);
 }
 
 function countdown(minutes)
@@ -70,3 +72,12 @@ function stopTimer()
 {
     stop=true;
 }
+
+
+var sessionParams =
+{
+    workSessionDuration:00,
+    breakDuration:00,
+    numBerOfSessions:00,
+    continuousMode:false
+};
