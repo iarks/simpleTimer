@@ -1,6 +1,11 @@
 var timeoutHandle;
 var stop = false;
 
+window.onload = function init(){
+    document.getElementById("startTimer").addEventListener("click",startTimer);
+    document.getElementById("stopTimer").addEventListener("click",stopTimer);
+}
+
 function countdown(minutes)
 {
     var seconds = 60;
@@ -51,7 +56,7 @@ function countdown(minutes)
     tick();
 }
 
-function startTimer(event)
+function startTimer()
 {
     //todo - stop existing timers if running
     //stopTimer(); 
