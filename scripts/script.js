@@ -1,6 +1,7 @@
 var timeoutHandle;
 var stop = false;
 var w;
+var y=1;
 
 window.onload = function init(){
     document.getElementById("startTimer").addEventListener("click",startTimer);
@@ -21,22 +22,36 @@ function stopTimer()
     w.terminate();
 }
 
-
-
 function startWorker()
 {
-    console.log("inside start worker");
+    //console.log("inside start worker");
 
     w = new Worker('scripts/worker.js');
     
-    console.log("worker started")
+    //console.log("worker started")
 
-    w.postMessage([100]);
+    w.postMessage([60]);
     
     w.onmessage = f;
 }
 
 function f(ev)
 {
-    console.log("printing from main " + ev.data);
+    // console.log("printing from main " + parseInt(ev.data)-60);
+    var x= parseInt(ev.data);
+    //x=x-60;
+    console.log(x);
+    if(x==0)
+    {
+        if(y!=0)
+        {
+            w.terminate();
+            --y;
+            startWorker();
+        }
+        else
+        {
+            stopTimer();
+        }
+    }
 }
