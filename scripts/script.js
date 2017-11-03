@@ -1,7 +1,5 @@
-var timeoutHandle;
-var stop = false;
-var w;
-var y=1;
+var worker;
+var minutes=1;// for x minutes set minutes to x-1
 
 window.onload = function init(){
     document.getElementById("startTimer").addEventListener("click",startTimer);
@@ -12,44 +10,38 @@ function startTimer(){
     console.log("timer started");
     
     startWorker();
-
-    console.log("timer started");
-    //console.log("timer started for :" + time + " min(s)");
-
-    //document.getElementById("minutes").innerHTML=y;
 }
 
 function stopTimer()
 {
-    w.terminate();
+    worker.terminate();
 }
 
 function startWorker()
 {
     //console.log("inside start worker");
-    w = new Worker('scripts/worker.js');
+    worker = new Worker('scripts/worker.js');
     
     //console.log("worker started")
 
-    w.postMessage([60]);
+    worker.postMessage([60]);
     
-    w.onmessage = f;
+    worker.onmessage = onReplyFromWorker;
     //document.getElementById("minutes").innerHTML=y;
 }
 
-function f(ev)
-{
+function onReplyFromWorker(params){
     // console.log("printing from main " + parseInt(ev.data)-60);
-    var x= parseInt(ev.data);
+    var seconds= parseInt(params.data);
     //x=x-60;
-    console.log(x);
-    document.getElementById("minutes").innerHTML=(y < 10 ? "0" : "")+y+"\t:\t"+(x < 10 ? "0" : "") + x;
-    if(x==0)
+    console.log(seconds);
+    document.getElementById("watchFace").innerHTML=(minutes < 10 ? "0" : "")+minutes+"\t:\t"+(seconds < 10 ? "0" : "") + seconds;
+    if(seconds==0)
     {
-        if(y!=0)
+        if(minutes!=0)
         {
-            w.terminate();
-            --y;
+            worker.terminate();
+            --minutes;
             startWorker();
         }
         else

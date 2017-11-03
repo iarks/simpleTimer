@@ -4,8 +4,7 @@ this.onmessage = function running(params)
     tickTock(params.data[0]);  
 }
 
-function tickTock(x)
+function tickTock(secondsCountdown)
 {
-    //x-=60;
-    setInterval(function(){postMessage(--x)},1000);
+    setInterval(function(){postMessage(--secondsCountdown)},1000);
 }
