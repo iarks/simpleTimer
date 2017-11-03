@@ -15,6 +15,8 @@ function startTimer(){
 
     console.log("timer started");
     //console.log("timer started for :" + time + " min(s)");
+
+    //document.getElementById("minutes").innerHTML=y;
 }
 
 function stopTimer()
@@ -25,7 +27,6 @@ function stopTimer()
 function startWorker()
 {
     //console.log("inside start worker");
-
     w = new Worker('scripts/worker.js');
     
     //console.log("worker started")
@@ -33,6 +34,7 @@ function startWorker()
     w.postMessage([60]);
     
     w.onmessage = f;
+    //document.getElementById("minutes").innerHTML=y;
 }
 
 function f(ev)
@@ -41,6 +43,7 @@ function f(ev)
     var x= parseInt(ev.data);
     //x=x-60;
     console.log(x);
+    document.getElementById("minutes").innerHTML=(y < 10 ? "0" : "")+y+"\t:\t"+(x < 10 ? "0" : "") + x;
     if(x==0)
     {
         if(y!=0)
