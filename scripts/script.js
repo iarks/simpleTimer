@@ -1,34 +1,58 @@
 var worker;
 var sessionID = 0;
+var startButton,stopButton;
+var timerStatus,whatSessionIsThi,workSessionsLeftBeforeBreak,longBreadDuration;
 
-const WORK_SESSION = 1;
-const BREAK_SESSION = 2;
-const LONG_BREAK_SESSION = 3;
+window.onload = function init()
+{
+    startButton = document.getElementById("startTimer");
+    startButton.addEventListener("click",startTimer);
+    
+    stopButton=document.getElementById("stopTimer");
+    stopButton.disabled=true;
+    stopButton.addEventListener("click",stopTimer);
 
-window.onload = function init(){
-    document.getElementById("startTimer").addEventListener("click",startTimer);
-    document.getElementById("stopTimer").addEventListener("click",stopTimer);
+    timerStatus = document.getElementById("timerStatus");
+    timerStatus.innerHTML="Timer Stopped";
+
+    whatSessionIsThi = document.getElementById("whatSessionisThis");
+    whatSessionIsThi.innerHTML = "Timer not running. No session information."
+
+    workSessionsLeftBeforeBreak = document.getElementById("workSessionLeftBeforeBreak");
+    workSessionsLeftBeforeBreak.innerHTML="0";
 }
 
 function startTimer()
 {
     console.log("timer started");
 
-    sessionParams.timerLoops[0] = document.getElementById("workSession").value;
-    sessionParams.timerLoops[1] = document.getElementById("numberOfSession").value-1;
+    sessionParams.timerLoops[0] = document.getElementById("workSessionDuration").value;
+    sessionParams.timerLoops[1] = document.getElementById("numberOfSessionBeforeLongBreak").value-1;
 
-    sessionParams.timerLoops[2] = document.getElementById("breakSession").value;
-    sessionParams.timerLoops[3] = document.getElementById("longBreakSession").value;
+    sessionParams.timerLoops[2] = document.getElementById("breakSessionDuration").value;
+    sessionParams.timerLoops[3] = document.getElementById("longBreakSessionDuration").value;
 
-    sessionID = WORK_SESSION;
+    sessionID = 1;
     
     startWorker(sessionParams.timerLoops[0]);
+
+    document.getElementById("startTimer").disabled=true;
+    document.getElementById("stopTimer").disabled=false;
+
+    whatSessionIsThi.innerHTML="WORKING SESSION";
+
+    workSessionsLeftBeforeBreak.innerHTML=sessionParams.timerLoops[1];
 }
 
 function stopTimer()
 {
     worker.terminate();
-    document.getElementById("watchFace").innerHTML="--:--";
+    document.getElementById("watchFace").innerHTML="--\t:\t--";
+    timerStatus.innerHTML="Timer Stopped";
+    console.log("a session is complete");
+
+    startButton.disabled=false;
+    stopButton.disabled=true;
 }
 
 function startWorker(time)
@@ -36,6 +60,8 @@ function startWorker(time)
     
     //console.log("inside start worker");
     worker = new Worker('scripts/worker.js');
+
+    timerStatus.innerHTML="Timer started for "+  (time < 10 ? "0" : "")+ time + "\t:\t00"; 
     
     //console.log("worker started")
 
@@ -43,6 +69,10 @@ function startWorker(time)
     
     worker.onmessage = onReplyFromWorker;
     //document.getElementById("minutes").innerHTML=y;
+
+   
+
+
 }
 
 function onReplyFromWorker(params)
@@ -62,22 +92,29 @@ var sessionParams={
 
 function nextSession()
 {
-    switch(sessionID)
+    sessionID++;
+    console.log("new session id "+sessionID);
+    if(sessionID%2==0)
     {
-        case WORK_SESSION:
-            if(sessionParams.timerLoops[1] != 0)
-            {
-                sessionParams.timerLoops[1]--;
-                sessionID=BREAK_SESSION;
-                startWorker(sessionParams.timerLoops[2]);
-                return;
-            }
-            sessionID=LONG_BREAK_SESSION;
-            startWorker(sessionParams.timerLoops[3]);
-            break;
-        case BREAK_SESSION:
-        case LONG_BREAK_SESSION:
-            sessionID=WORK_SESSION;
-            startWorker(sessionParams.timerLoops[1]);
+        if(sessionParams.timerLoops[1]==0)
+        {
+            console.log("staring long session");
+            whatSessionIsThi.innerHTML="LONG BREAK SESSION";
+            startWorker(sessionParams.timerLoops[3])
+        }
+        else
+        {
+            whatSessionIsThi.innerHTML="SHORT BREAK SESSION";
+            console.log("staring break session");
+            startWorker(sessionParams.timerLoops[2])
+        }
+    }
+    else
+    {
+        sessionParams.timerLoops[1]--;
+        workSessionsLeftBeforeBreak.innerHTML=sessionParams.timerLoops[1];
+        console.log("staring work session");
+        whatSessionIsThi.innerHTML="WORKING SESSION";
+        startWorker(sessionParams.timerLoops[0]);
     }
 }

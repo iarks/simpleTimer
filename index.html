@@ -9,25 +9,42 @@
     
     <!--body code-->
     <body>
+
+        <section id="timerSection">
+            <div class="center_this">
+                <strong><label id="watchFace">--  :   --</label></strong>
+            </div>
+        </section> 
+
+        <section id = "info" class="center_this_small">
+            <div id="timerStatus">Timer Stopped</div>
+            <div id="whatSessionisThis">Session 0</div>
+            <div id="workSessionLeftBeforeBreak">Session 0</div>
+        </section>
+
         <section id="form">
-            <label for="workSession">Work Session Duration:</label>
-            <input type=number id="workSession" value=1 step=1 max="60" min="1">
+            <label for="workSessionDuration">Work Session Duration:</label>
+            <input type=number id="workSessionDuration" value=1 step=1 max="60" min="1">
             </br>
 
-            <label for="breakDuration">Break Duration:</label>
-            <input type=number id="breakSession" value=1 step=1 max="30" min="1">
+            <label for="breakSessionDuration">Break Duration:</label>
+            <input type=number id="breakSessionDuration" value=1 step=1 max="30" min="1">
             </br>
 
-            <label for="longBreakDuration">Long Break Duration:</label>
-            <input type=number id="longBreakSession" value=1 step=1 max="60" min="1">
+            <label for="longBreakSessionDuration">Long Break Duration:</label>
+            <input type=number id="longBreakSessionDuration" value=1 step=1 max="60" min="1">
             </br>
 
-            <label for="sessionNumber">Number of sessions before long break:</label>
-            <input type=number id="numberOfSession" value=1 step=1 max="8" min="1">
+            <label for="numberOfSessionBeforeLongBreak">Number of sessions before long break:</label>
+            <input type=number id="numberOfSessionBeforeLongBreak" value=1 step=1 max="8" min="1">
             </br>
 
             Continuous mode: <input type="checkbox" id="continuousMode">
             </br>
+        
+        </section>
+
+        <section class="center_this">
 
             <button id="startTimer">Start Timer</button>
 
@@ -35,20 +52,9 @@
 
         </section>
 
-        <section id="timerSection">
-            <strong><label id="watchFace">--  :   --</label></strong>
-        </section> 
+       
 
-        <section id = "info">
-            <label for="Timer Information">Timer Stopped</label>
-            </br>
-            <label for="WorkingSesstionNumber">Sesstion 0</label>
-            </br>
-            <label for="ShortBreakSession">Sesstion 0</label>
-            </br>
-            <label for="LongBreakSession">Sesstion 0</label>
-            </br>
-        </section>
+        
         
         
     </body>
