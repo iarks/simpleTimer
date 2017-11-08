@@ -1,5 +1,6 @@
 /*reset css*/
 /* Change all elements to use border-box */
+@import 'normalize.css';
 html
 {
     box-sizing: border-box;
@@ -9,17 +10,20 @@ html
     box-sizing: inherit;
 }
 
-/*theme styles*/
-.background-primary {
-    background: #F7941E; /*Orange*/
-  }
-  .background-secondary {
-    background: #00AEEF; /*Blue*/
-  }
-  .background-tertiary {
-    background: #8DC63F; /*Green*/
-  }
-  
+/* theme styles */
+.background-primary
+{
+    background: #F7941E;
+}
+.background-secondary
+{
+    background: #00AEEF;
+}
+.background-tertiary
+{
+    background: #8DC63F;
+}
+
   /*Color List:
   - light blue = 00AEEF;
   - dark blue = 1C75BC
@@ -28,6 +32,74 @@ html
   - orange = F7941E
   - dark orange = F15A29
   - brown = 594a42; */
+
+/*base styles*/
+body
+{
+    color: #414042;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+}
+h1, h2, h3
+{
+    font-weight: bold;
+}
+a
+{
+    color: #8dc63f;
+    font-weight: bold;
+}
+a:hover
+{
+    text-decoration: underline;
+}
+
+/*Layout Styles*/
+.container
+{
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 1170px;
+}
+
+/*row*/
+.row {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/*layout styles*/
+[class*='col-']
+{
+    width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+@media (min-width: 48em) {
+    [class*='col-'] {
+        float: left;
+    }
+    /* Column Third */
+    .col-1-3 {
+        width: 33.3333%;
+    }
+    /* Column Two Thirds */
+    .col-2-3 {
+        width: 66.6666%;
+    }
+}
+
+
+
 
 /* #timerSection
 {
