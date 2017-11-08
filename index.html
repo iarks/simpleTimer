@@ -6,17 +6,19 @@
         <meta charset="utf-8"/>
         <link rel="stylesheet" href="styles/style.css">
     </head>
+
+    <header>SIMPLE TIMER</header>
     
     <!--body code-->
-    <body>
+    <main>
 
-        <section id="timerSection">
+        <section id="timerSection" class="background-primary">
             <div class="center_this">
                 <strong><label id="watchFace">--  :   --</label></strong>
             </div>
         </section> 
 
-        <section id = "info" class="center_this_small">
+        <section id = "info" class="background-secondary">
             <div id="timerStatus">Timer Stopped</div>
             <div id="whatSessionisThis">Session 0</div>
             <div id="workSessionLeftBeforeBreak">Session 0</div>
@@ -44,7 +46,7 @@
         
         </section>
 
-        <section class="center_this">
+        <section class="background-tertiary">
 
             <button id="startTimer">Start Timer</button>
 
@@ -57,7 +59,7 @@
         
         
         
-    </body>
+    </main>
 
     <script src="scripts/script.js"></script>
     <script src="scripts/worker.js"></script>
